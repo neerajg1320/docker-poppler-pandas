@@ -1,3 +1,11 @@
+Dependencies:
+python-poppler-dev-base:latest
+##
+Above dependency can be created as:
+
+docker build -f Dockerfile.dev -t python-poppler-dev-base .
+##
+
 docker-compose -f docker-compose-python-poppler-dev.yml up --build
 ## 
 The above command creates two containers poppler_1 and minimal_1

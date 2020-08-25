@@ -1,0 +1,33 @@
+FROM python-poppler-dev-base:latest as base
+
+# set environment variables
+# ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+
+RUN apt update
+
+
+RUN mkdir /packages; exit 0
+WORKDIR /packages
+
+
+RUN apt install -y net-tools iputils-ping vim openssh-server postgresql-client
+
+RUN mkdir /root/.ssh; exit 0
+COPY minimalkey.pub /root/.ssh/authorized_keys
+COPY popplerkey /root/.ssh/id_rsa
+RUN chmod 0400 /root/.ssh/id_rsa
+COPY ssh_config /root/.ssh/config
+
+COPY poppler_libs.txt ./
+COPY findcopy.sh ./
+COPY copy.sh ./
+COPY copy_poppler_bins_to_minimal.sh ./
+
+#RUN rm -rf /packages
+COPY entrypoint.sh ./
+RUN chmod +x ./entrypoint.sh
+ENTRYPOINT ["./entrypoint.sh"]
+
+CMD ["/bin/bash"]

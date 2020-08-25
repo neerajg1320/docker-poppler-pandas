@@ -1,0 +1,18 @@
+# docker-compose -f docker-compose-poppler-pandas-dev.yml up
+version: '3'
+
+services:
+  poppler:
+    build:
+      context: python-poppler-dev
+      dockerfile: Dockerfile.dev
+    command: ping www.google.com -i 10
+    depends_on:
+      - minimal
+
+  minimal:
+    build:
+      context: python-poppler-compact
+      dockerfile: Dockerfile.dev
+    command: ping www.google.com -i 10
+

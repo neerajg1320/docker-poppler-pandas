@@ -1,0 +1,27 @@
+FROM python:3.7-slim
+
+# set environment variables
+# ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+RUN apt update
+
+# The following is extra used only for build process and debugging
+RUN apt install -y net-tools iputils-ping vim openssh-server
+
+#RUN apt install -y libpoppler-dev
+
+RUN mkdir /packages
+WORKDIR /packages
+
+RUN mkdir /root/.ssh
+COPY popplerkey.pub /root/.ssh/authorized_keys
+COPY minimalkey /root/.ssh/id_rsa
+RUN chmod 0400 /root/.ssh/id_rsa
+COPY ssh_config /root/.ssh/config
+
+COPY entrypoint.sh ./
+RUN chmod +x ./entrypoint.sh
+ENTRYPOINT ["./entrypoint.sh"]
+
+CMD ["/bin/bash"]

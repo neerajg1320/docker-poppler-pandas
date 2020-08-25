@@ -1,0 +1,7 @@
+libpoppler.so.102
+libfreetype.so.6
+libfontconfig.so.1
+libfontconfig.so.1
+libjpeg.so.62
+libopenjp2.so.7
+libpng16.so.16

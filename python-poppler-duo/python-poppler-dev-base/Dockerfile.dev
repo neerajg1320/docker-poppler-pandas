@@ -1,0 +1,18 @@
+FROM python:3.7-slim
+
+# set environment variables
+# ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+RUN apt update
+
+RUN mkdir /packages
+WORKDIR /packages
+
+# Specify install_poppler.sh [version default=20.08.0]
+COPY poppler_compile_install_clean.sh ./
+RUN bash poppler_compile_install_clean.sh
+RUN pdftotext -v
+
+
+CMD ["/bin/bash"]
